@@ -1,4 +1,4 @@
-# train_cos_poly.py
+# train_taylor_series.py
 """
 Approximate y = cos(x) using a cubic polynomial:
 y = a*x + b*x^2 + c*x^3
@@ -15,8 +15,8 @@ import numpy as np
 torch.manual_seed(0)
 
 # Generate training data
-x_train = torch.linspace(-2*np.pi, 2*np.pi, 400).unsqueeze(1)  # shape: [200, 1]
-y_train = torch.sin(x_train)                                     # shape: [200, 1]
+x_train = torch.linspace(-1*np.pi, 1*np.pi, 200).unsqueeze(1)
+y_train = torch.sin(x_train)                                    
 
 # Define the polynomial model: y = a*x + b*x^2 + c*x^3
 class PolyModel(nn.Module):
@@ -26,10 +26,9 @@ class PolyModel(nn.Module):
         self.a = nn.Parameter(torch.randn(1, requires_grad=True))
         self.b = nn.Parameter(torch.randn(1, requires_grad=True))
         self.c = nn.Parameter(torch.randn(1, requires_grad=True))
-        self.d = nn.Parameter(torch.randn(1, requires_grad=True))
 
     def forward(self, x):
-        return self.a * x**1 + self.b * x**2 + self.c * x**3 + self.d * x**4
+        return self.a * x**1 + self.b * x**2 + self.c * x**3
 
 # Initialize model
 model = PolyModel()
@@ -39,7 +38,7 @@ criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
 # Training loop
-num_epochs = 12000
+num_epochs = 2000
 for epoch in range(num_epochs):
     optimizer.zero_grad()
     y_pred = model(x_train)
@@ -47,7 +46,7 @@ for epoch in range(num_epochs):
     loss.backward()
     optimizer.step()
 
-    if (epoch+1) % 200 == 0:
+    if (epoch+1) % 500 == 0:
         print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.6f}")
 
 # Print learned coefficients
@@ -55,7 +54,6 @@ print("\nLearned coefficients:")
 print(f"a = {model.a.item():.4f}")
 print(f"b = {model.b.item():.4f}")
 print(f"c = {model.c.item():.4f}")
-print(f"d = {model.c.item():.4f}")
 
 # Plot results
 x_plot = x_train.detach().numpy()
