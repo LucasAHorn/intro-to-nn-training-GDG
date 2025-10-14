@@ -1,6 +1,6 @@
 # ============================================================
 # train_taylor_series.py
-# Approximate y = cos(x) using a cubic polynomial:
+# Approximate y = sin(x) using a cubic polynomial:
 #     y = a*x + b*x^2 + c*x^3
 # We'll learn the coefficients (a, b, c) using PyTorch.
 # ============================================================
