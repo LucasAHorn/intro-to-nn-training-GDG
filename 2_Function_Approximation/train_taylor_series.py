@@ -39,7 +39,6 @@ class PolyModel(nn.Module):
 
     def forward(self, x):
         # TODO: write the equation for the cubic polynomial
-        # Hint: return self.a * x + self.b * x**2 + self.c * x**3
         return self.a * x + self.b * x**2 + self.c * x**3
 
 # ------------------------------------------------------------
