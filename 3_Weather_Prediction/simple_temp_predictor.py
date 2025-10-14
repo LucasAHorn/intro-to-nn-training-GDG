@@ -4,7 +4,6 @@
 # This version:
 #   • Uses 500 data points from a CSV file
 #   • Does NOT use DataLoader or mini-batches
-#   • Is written for beginners to understand each step
 # ==============================================================
 
 import torch
